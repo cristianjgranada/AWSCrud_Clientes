@@ -1,0 +1,106 @@
+<div class="container">
+    <H1>
+        <p class="text-white bg-dark  mt-3">AWS CRUD CLIENTES</p>
+    </H1>
+    <form ngNativeValidate [formGroup]="form" (ngSubmit) ="registrarCliente()" class="needs-validation mb-3" >
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip01">Numero Identificacion</label>
+                <input type="text" class="form-control" formControlName ="numeroIdentificacion" name ="Identificacion" id="numeroIdentificacion" value="" autocomplete="off" required>
+                <div class="valid-tooltip">
+                    Looks good!
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip04">Tipo Identificacion</label>
+                <select class="custom-select" formControlName ="tipoIdentificacion" name ="TipoIdentificacion" id="tipoIdentificacion" required>
+                    <option selected disabled value="">Escoja...</option>
+                    <option *ngFor = "let tipocc of tiposIdentificacion" >{{tipocc.tipo }}  </option>
+                </select>
+                <div class="invalid-tooltip">
+                    Please select a valid state.
+                </div>
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip03">Nombres</label>
+                <input type="text" class="form-control" formControlName ="nombre" name ="Nombres" class="form-control" id="nombres" autocomplete="off">
+                <div class="invalid-tooltip">
+                    Please provide a valid city.
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip03">Apellidos</label>
+                <input type="text" formControlName ="apellido" name ="Apellidos"  class="form-control" id="apellidos" autocomplete="off">
+                <div class="invalid-tooltip">
+                    Please provide a valid city.
+                </div>
+            </div>
+            <div class="col-md-2 mb-3">
+                <label for="validationTooltip05">Edad</label>
+                <input type="number"  formControlName ="edad" name ="Edad"   class="form-control" id="edad" required>
+                <div class="invalid-tooltip">
+                    Please provide a valid zip.
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label for="validationTooltip04">Ciudad</label>
+                <select class="custom-select" formControlName ="ciudad" name ="Ciudad"    id="ciudad" >
+                    <option selected disabled value="">Escoja...</option>
+                    <option *ngFor ="let ciudad of Ciudades" > {{ ciudad.ciudad  }} </option>
+                </select>
+                <div class="invalid-tooltip">
+                    Please select a valid state.
+                </div>
+            </div>
+        </div>
+        <ng-container *ngIf="actualizar; else elseBlock" >
+            <button class="btn btn-warning"  (click) = "guardarActualizacion()" >Actualizar</button>
+        </ng-container>
+
+        <ng-template #elseBlock>
+            <button class="btn btn-primary" type="submit" >Crear</button>
+        </ng-template>
+        
+        <button class="btn btn-info ml-3" (click) ="buscarEdad()" >Buscar</button>
+    </form>
+
+    <table class="table table-striped table-dark table-sm table-responsive w-auto">
+        <thead>
+            <tr>
+                <th style="width:10%">Numero Identificacion</th>
+                <th style="width:10%">Tipo Identificacion</th>
+                <th style="width:10%">Nombres</th>
+                <th style="width:10%">Apellidos</th>
+                <th style="width:10%">Edad</th>
+                <th style="width:10%">Ciudad</th>
+                <th style="width:15%">Opciones</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let selectedCliente of jsnClientes">
+                <td>{{selectedCliente.NumeroIdentificacion}}</td>
+                <td>{{selectedCliente.TipoIdentificacion}}</td>
+                <td>{{selectedCliente.Nombres}}</td>
+                <td>{{selectedCliente.Apellidos}}</td>
+                <td>{{selectedCliente.Edad}}</td>
+                <td>{{selectedCliente.Ciudad}}</td>
+                <td>
+                    <button class="btn btn-warning btn-sm mt-1 " (click) = "actualizarCliente(
+                        selectedCliente.NumeroIdentificacion
+                        ,selectedCliente.TipoIdentificacion
+                        ,selectedCliente.Nombres
+                        ,selectedCliente.Apellidos
+                        ,selectedCliente.Edad
+                        ,selectedCliente.Ciudad
+                        )" >Actualizar</button>
+                    <button class="btn btn-danger ml-2 btn-sm mt-1" (click) = "eliminarCliente(selectedCliente.NumeroIdentificacion,selectedCliente.TipoIdentificacion )" >Eliminar</button>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
